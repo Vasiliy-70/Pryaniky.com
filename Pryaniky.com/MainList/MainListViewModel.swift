@@ -12,10 +12,12 @@ protocol IMainListViewModelInput: class {
 //	Входной протокол
 	func fetchData()
 	var list: PublishSubject<[String]> { get }
+	var item: BehaviorSubject<RootData?> { get }
 }
 
 protocol IMainListViewModelOutput: class {
 //	Выходной протокол
+	var selectedItemName: String { get set }
 }
 
 final class MainListViewModel {
@@ -23,7 +25,9 @@ final class MainListViewModel {
 	private var queryService: IQueryService
 	private var url = "https://pryaniky.com/static/json/sample.json"
 	private var listItems = PublishSubject<[String]>()
-	
+	private var selectedItems = BehaviorSubject<RootData?>(value: nil)
+	private var listItemsData = [RootData]()
+	private let disposeBag = DisposeBag()
 	
 	init(model: MainListModel, queryService: IQueryService) {
 		self.model = model
@@ -41,7 +45,8 @@ private extension MainListViewModel {
 					self.listItems.onCompleted()
 				}
 				
-			})
+				self.listItemsData = listModel.data ?? []
+			}).disposed(by: disposeBag)
 		}
 	}
 }
@@ -49,6 +54,10 @@ private extension MainListViewModel {
 // MARK: IMainViewViewModelInput
 
 extension MainListViewModel: IMainListViewModelInput {
+	var item: BehaviorSubject<RootData?> {
+		self.selectedItems
+	}
+	
 	func fetchData() {
 		self.fetchDataModel()
 	}
@@ -56,6 +65,23 @@ extension MainListViewModel: IMainListViewModelInput {
 	var list: PublishSubject<[String]> {
 		get {
 			self.listItems
+		}
+	}
+}
+
+// MARK: IMainListViewModelOutput
+
+extension MainListViewModel: IMainListViewModelOutput {
+	var selectedItemName: String {
+		get {
+			return ""
+		}
+		set {
+			for item in listItemsData{
+				if item.name == newValue {
+					self.selectedItems.onNext(item)
+				}
+			}
 		}
 	}
 }

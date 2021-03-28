@@ -57,6 +57,7 @@ extension MainListViewController {
 		
 		tableView.rx.modelSelected(String.self).subscribe(onNext: { item in
 			print("SelectedItem: \(item)")
+			self.viewModel.selectedItemName = item
 		}).disposed(by: disposeBag)
 		
 		self.viewModel.fetchData()

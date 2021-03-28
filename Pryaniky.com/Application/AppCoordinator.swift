@@ -6,9 +6,15 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class AppCoordinator {
 	private let window: UIWindow
+	private let disposeBag = DisposeBag()
+	
+	private var navigationController: UINavigationController?
+	private var detailView: DetailViewController?
 	
 	init(window: UIWindow) {
 		self.window = window
@@ -18,8 +24,22 @@ final class AppCoordinator {
 		let model = MainListModel(data: nil, view: nil)
 		let viewModel = MainListViewModel(model: model, queryService: QueryService())
 		let viewController = MainListViewController(viewModel: viewModel)
-		let navigationController = UINavigationController(rootViewController: viewController)
+		self.navigationController = UINavigationController(rootViewController: viewController)
+		
+		viewModel.item.subscribe(onNext: { item in
+			if item != nil {
+				self.changeView(DetailViewController(viewModel: viewModel))
+			}
+		}).disposed(by: disposeBag)
+		
 		window.rootViewController = navigationController
 		window.makeKeyAndVisible()
+	}
+	
+	func changeView(_ viewController: UIViewController) {
+		guard let nc = self.navigationController else { return }
+		if !nc.viewControllers.contains(viewController) {
+			nc.pushViewController(viewController, animated: true)
+		}
 	}
 }
