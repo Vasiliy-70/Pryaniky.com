@@ -39,7 +39,6 @@ private extension MainListViewModel {
 	func fetchDataModel() {
 		if let url = URL(string: self.url) {
 			self.queryService.dataFrom(url: url).subscribe(onNext: { listModel in
-//				print(listModel)
 				if let data = listModel.view {
 					self.listItems.onNext(data)
 					self.listItems.onCompleted()

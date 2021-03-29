@@ -19,7 +19,8 @@
 		47DE3C1B260CB6D500941771 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DE3C1A260CB6D500941771 /* DetailView.swift */; };
 		47DE3C1F260CB6EC00941771 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DE3C1E260CB6EC00941771 /* DetailViewController.swift */; };
 		47E3A8C0260786FB001225DA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E3A8BF260786FB001225DA /* AppCoordinator.swift */; };
-		A3967C93D6C3BBC19267697B /* Pods_Pryaniky_com.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3BC0183175EF058C3DADE2 /* Pods_Pryaniky_com.framework */; };
+		47F8A6B82611C69D005B4F04 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8A6B72611C69D005B4F04 /* Factory.swift */; };
+		47F8A6BB2611C98B005B4F04 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8A6BA2611C98B005B4F04 /* CustomImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,9 +38,10 @@
 		47DE3C1A260CB6D500941771 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		47DE3C1E260CB6EC00941771 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		47E3A8BF260786FB001225DA /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		47F8A6B72611C69D005B4F04 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		47F8A6BA2611C98B005B4F04 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		4CF5B9789C54351206BB77EA /* Pods-Pryaniky.com.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pryaniky.com.debug.xcconfig"; path = "Target Support Files/Pods-Pryaniky.com/Pods-Pryaniky.com.debug.xcconfig"; sourceTree = "<group>"; };
 		55703DE0B70FC7781D8D5BA0 /* Pods-Pryaniky.com.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pryaniky.com.release.xcconfig"; path = "Target Support Files/Pods-Pryaniky.com/Pods-Pryaniky.com.release.xcconfig"; sourceTree = "<group>"; };
-		9A3BC0183175EF058C3DADE2 /* Pods_Pryaniky_com.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pryaniky_com.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +49,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3967C93D6C3BBC19267697B /* Pods_Pryaniky_com.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,7 +58,6 @@
 		446E1796868CBBAE57C4B957 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9A3BC0183175EF058C3DADE2 /* Pods_Pryaniky_com.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -91,6 +91,7 @@
 		476CC65E2607811000B3180A /* Pryaniky.com */ = {
 			isa = PBXGroup;
 			children = (
+				47F8A6B62611C677005B4F04 /* Custom */,
 				47685D7A2608441D00A6A15C /* Networking */,
 				47DE3C19260CB67D00941771 /* DetailView */,
 				476CC6772607813800B3180A /* MainList */,
@@ -138,6 +139,15 @@
 				47DE3C1E260CB6EC00941771 /* DetailViewController.swift */,
 			);
 			path = DetailView;
+			sourceTree = "<group>";
+		};
+		47F8A6B62611C677005B4F04 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				47F8A6B72611C69D005B4F04 /* Factory.swift */,
+				47F8A6BA2611C98B005B4F04 /* CustomImageView.swift */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		987B2AF8D03D7626C12E949F /* Pods */ = {
@@ -263,7 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				47E3A8C0260786FB001225DA /* AppCoordinator.swift in Sources */,
+				47F8A6BB2611C98B005B4F04 /* CustomImageView.swift in Sources */,
 				47DE3C1B260CB6D500941771 /* DetailView.swift in Sources */,
+				47F8A6B82611C69D005B4F04 /* Factory.swift in Sources */,
 				476CC6642607811000B3180A /* MainListViewController.swift in Sources */,
 				476CC6602607811000B3180A /* AppDelegate.swift in Sources */,
 				476CC6622607811000B3180A /* SceneDelegate.swift in Sources */,

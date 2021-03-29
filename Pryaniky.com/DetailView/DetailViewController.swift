@@ -37,17 +37,23 @@ extension DetailViewController {
 	func setupViewData() {
 		self.viewModel.item.subscribe(onNext: { item in
 			self.navigationItem.title = item?.name
-			self.customView.label = item?.data?.text
 			
-			if let selectedId = item?.data?.selectedId {
-				self.customView.sliderValue = Float(selectedId)
-			} else {
-				self.customView.sliderValue = nil
+			let stack = UIStackView()
+			stack.axis = .vertical
+			stack.distribution = .equalSpacing
+			stack.spacing = 50
+			stack.alignment = .center
+			
+			if let text = item?.data?.text {
+				stack.addArrangedSubview(Factory.singleton.create(ui: .label(text)))
 			}
 			
-			self.customView.imageURL = item?.data?.url
+			if let url = item?.data?.url {
+				stack.addArrangedSubview(Factory.singleton.create(ui: .imageView(url)))
+			}
+			
+			self.customView.stack = stack
 			
 		}).disposed(by: self.disposeBag)
-//		self.customView.addSubview(<#T##view: UIView##UIView#>)
 	}
 }

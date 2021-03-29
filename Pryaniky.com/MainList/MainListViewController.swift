@@ -37,15 +37,7 @@ final class MainListViewController: UIViewController {
 	}
 }
 
-extension MainListViewController {
-	func loadViewData() {
-//		self.viewModel.fetchData().subscribe(onNext: { text in
-//			DispatchQueue.main.async {
-////				self.customView?.labelText = text
-//			}
-//		}).disposed(by: self.disposeBag)
-	}
-	
+private extension MainListViewController {
 	func setupTable() {
 		guard let tableView = self.customView?.tableView else { return }
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.cellId)
@@ -68,17 +60,3 @@ extension MainListViewController {
 
 extension MainListViewController: UITableViewDelegate {
 }
-
-// MARK: UITableViewDataSource
-//
-//extension MainListViewController: UITableViewDataSource {
-//	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//		<#code#>
-//	}
-//
-//	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//		<#code#>
-//	}
-//
-//
-//}

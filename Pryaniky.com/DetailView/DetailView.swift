@@ -10,42 +10,25 @@ import RxSwift
 import RxCocoa
 
 protocol IDetailViewType: class {
-	var label: String? { get set }
-	var imageURL: String? { get set }
-	var sliderValue: Float? { get set }
+	var stack: UIStackView { get set }
 }
 
 final class DetailView: UIView {
-	private var textLabel: UILabel = {
-		let text = UILabel()
-		text.font = .systemFont(ofSize: 14)
-		text.text = "Default"
-		return text
+	private var scrollView: UIScrollView = {
+		let scrollView = UIScrollView()
+		scrollView.backgroundColor = .white
+		return scrollView
 	}()
 	
-	private var imageView: UIImageView = {
-		let image = UIImageView()
-		image.contentMode = .scaleAspectFit
-		return image
+	private var stackView: UIStackView = {
+		let stackView = UIStackView()
+		stackView.alignment = .center
+		return stackView
 	}()
 	
-	private var slider: UISlider = {
-		let slider = UISlider()
-		slider.value = 0
-		return slider
-	}()
-	
-	private enum Constants {
-		static let elementSpacing: CGFloat = 10
-		static let sliderWidth: CGFloat = 100
+	private enum Constraints {
+		static let verticalOffset: CGFloat = 20
 	}
-	
-	private enum ActiveConstraints {
-		static var imageViewConstraints: [NSLayoutConstraint] = []
-		static var textLabelConstraints: [NSLayoutConstraint] = []
-		static var sliderConstraints: [NSLayoutConstraint] = []
-	}
-	
 	
 	override init(frame: CGRect) {
 		super.init(frame: .zero)
@@ -57,29 +40,31 @@ final class DetailView: UIView {
 	}
 }
 
-
-extension DetailView {
+private extension DetailView {
 	func setupView() {
-		self.backgroundColor = .gray
+		self.backgroundColor = .white
 		self.setupConstraints()
 	}
 	
 	func setupConstraints() {
-		self.addSubview(self.textLabel)
-		self.textLabel.translatesAutoresizingMaskIntoConstraints = false
+		self.addSubview(self.scrollView)
+		self.scrollView.translatesAutoresizingMaskIntoConstraints = false
 		
-		ActiveConstraints.textLabelConstraints.append(contentsOf: [
-			self.textLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constants.elementSpacing),
-			self.textLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+		NSLayoutConstraint.activate([
+			self.scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+			self.scrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+			self.scrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+			self.scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
 		])
 		
-		self.addSubview(self.slider)
-		self.slider.translatesAutoresizingMaskIntoConstraints = false
+		self.scrollView.addSubview(self.stackView)
+		self.stackView.translatesAutoresizingMaskIntoConstraints = false
 		
-		ActiveConstraints.sliderConstraints.append(contentsOf: [
-			self.slider.topAnchor.constraint(equalTo: self.textLabel.bottomAnchor, constant: Constants.elementSpacing),
-			self.slider.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-			self.slider.widthAnchor.constraint(equalToConstant: Constants.sliderWidth)
+		NSLayoutConstraint.activate([
+			self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: Constraints.verticalOffset),
+			self.stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+			self.stackView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+			self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor)
 		])
 	}
 }
@@ -87,43 +72,14 @@ extension DetailView {
 // MARK: IDetailViewType
 
 extension DetailView: IDetailViewType {
-	var label: String? {
+	var stack: UIStackView {
 		get {
-			self.textLabel.text
+			self.stackView
 		}
 		set {
-			if newValue != nil {
-				self.textLabel.text = newValue
-				NSLayoutConstraint.activate(ActiveConstraints.textLabelConstraints)
-			} else {
-				NSLayoutConstraint.deactivate(ActiveConstraints.textLabelConstraints)
-			}
+			self.stackView = newValue
+			self.setupConstraints()
 			self.layoutIfNeeded()
 		}
 	}
-	
-	var imageURL: String? {
-		get {
-			""
-		}
-		set {
-//
-		}
-	}
-	
-	var sliderValue: Float? {
-		get {
-			return self.slider.value
-		}
-		set {
-			if let value = newValue  {
-				self.slider.setValue(value, animated: true)
-				NSLayoutConstraint.activate(ActiveConstraints.sliderConstraints)
-			} else {
-				NSLayoutConstraint.deactivate(ActiveConstraints.sliderConstraints)
-			}
-			self.layoutIfNeeded()
-	   }
-	}
-	
 }

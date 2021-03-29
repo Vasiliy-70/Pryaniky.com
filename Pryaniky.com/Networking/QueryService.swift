@@ -11,6 +11,7 @@ import UIKit
 
 protocol IQueryService: class {
 	func dataFrom(url: URL) -> Observable<MainListModel>
+	func getDataAt(url: URL, completion: @escaping (Data, String) -> Void)
 }
 
 final class QueryService {
@@ -23,6 +24,24 @@ final class QueryService {
 }
 
 private extension QueryService {
+	func JSONParse(data: Data) -> (MainListModel, String) {
+		var errorDescription = ""
+		var entityModel = MainListModel(data: nil, view: nil)
+		
+		do {
+			entityModel = try JSONDecoder().decode(MainListModel.self,
+												   from: data)
+		} catch let error {
+			errorDescription = error.localizedDescription
+		}
+		
+		return (entityModel, errorDescription)
+	}
+}
+
+// MARK: IQueryService
+
+extension QueryService: IQueryService {
 	func getDataAt(url: URL, completion: @escaping QueryResult) {
 		self.dataTask?.cancel()
 		
@@ -52,24 +71,6 @@ private extension QueryService {
 		self.dataTask?.resume()
 	}
 	
-	func JSONParse(data: Data) -> (MainListModel, String) {
-		var errorDescription = ""
-		var entityModel = MainListModel(data: nil, view: nil)
-		
-		do {
-			entityModel = try JSONDecoder().decode(MainListModel.self,
-												   from: data)
-		} catch let error {
-			errorDescription = error.localizedDescription
-		}
-		
-		return (entityModel, errorDescription)
-	}
-}
-
-// MARK: IQueryService
-
-extension QueryService: IQueryService {
 	func dataFrom(url: URL) -> Observable<MainListModel> {
 		return Observable.create { [weak self] observer -> Disposable in
 			var responseData = Data()
@@ -90,28 +91,3 @@ extension QueryService: IQueryService {
 		}
 	}
 }
-
-
-//
-//	func getDataAt(url: URL, completion: @escaping (Data, String) -> Void) {
-//		var error = ""
-//		var responseData: Data? = Data()
-//		let request = AF.request(url)
-//
-//		request.response { response in
-//			switch response.result {
-//			case .failure(let errorDescription):
-//				error = errorDescription.localizedDescription
-//			case .success(_):
-//				responseData = response.data
-//			}
-//		}
-//
-//		DispatchQueue.global(qos: .userInitiated).async {
-//			completion(responseData ?? Data(), error)
-//		}
-//	}
-//
-//
-
-

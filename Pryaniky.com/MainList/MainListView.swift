@@ -9,7 +9,6 @@ import UIKit
 
 protocol IMainListViewType: class {
 	var tableView: UITableView { get }
-//	var labelText: String? { get set }
 }
 
 final class MainListView: UIView {
@@ -19,7 +18,6 @@ final class MainListView: UIView {
 	init(viewController: MainListViewController) {
 		self.viewController = viewController
 		super.init(frame: .zero)
-		
 		
 		self.setupView()
 	}
@@ -31,9 +29,9 @@ final class MainListView: UIView {
 
 // MARK: SetupConstraints
 
-extension MainListView {
+private extension MainListView {
 	func setupView() {
-		self.backgroundColor = .red
+		self.backgroundColor = .white
 		self.setupListItems()
 	}
 	
